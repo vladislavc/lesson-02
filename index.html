@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Урок 2</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header-box"></header>
+    <main>
+        <h2>Цисаренко Владислав</h2>
+        <h1>Урок 2</h2>
+        <div class="task-box">
+        <p class="task-box__task"><strong>Задание: </strong> Создать массив group, элементы которого будут объектами, содержащими данные каждого студента группы. Какие данные - на ваше усмотрение ( например, имя, фамилия, возраст, наличие ноутбука и т.д. ). Создать функцию, которая итерирует массив group, выводя в консоль данные каждого студента одной строкой. Объявить функцию, которая добавляет нового студента в массив group. Формальные параметры - данные студента. Вызвать функцию addNewStudent, передав ей фактические данные нового студента. После этого вызвать предыдущую функцию ( getStudentsList ), чтобы убедиться, что студент добавлен в группу</p>
+<code>var group = [
+        {
+            name: "Николь",
+            lastName: "Шерзингер",
+            age: 31,
+            notebook: false,
+            country: "USA"
+        },
+        {
+            name: "Вася",
+            lastName: "Саратовский",
+            age: 45,
+            notebook: true,
+            country: "Russia"
+        },
+        {
+            name: "Иннесса",
+            lastName: "Морковская",
+            age: 21,
+            notebook: true,
+            country: "Ukraine"
+        }
+]
+
+function getStudentsList ( arrayOfStudents ) {
+    var studentString = ""
+    for (var i in arrayOfStudents) {
+        for (var m in arrayOfStudents[i]) {
+            studentString += m + ": " + arrayOfStudents[i][m] + " "
+        }
+        studentString += String.fromCharCode (10)
+    }
+    console.log(studentString)
+}
+
+getStudentsList(group)
+
+function addNewStudent (arg) {
+    group.push({
+        name: arg.name || "Безымянный",
+        lastName: arg.lastName || "Безфамильный",
+        age: arg.age || "XX",
+        notebook: arg.notebook || true,
+        country: arg.country || "EARTH"
+    })
+}
+
+addNewStudent({age:23,name:"Марина"})
+getStudentsList(group)
+</code>
+</div>
+<div class="task-box">
+        <p class="task-box__task"><strong>Задание: </strong> Объявить функцию, которая получает в качестве аргумента строку и удаляет из нее символы, код которых больше 1103 или меньше 1040. Функция должна вернуть новую строку. Применить эту функцию к строке "Вчbvnера 789 был home work наiuyстоtящий + празrorднgfdик"</p>
+<code>var someText = "Вчbvnера 789 был home work наiuyстоtящий + празrorднgfdик"
+function fmtText (sm) {
+    var newText = ""
+    for (var i = 0; i < sm.length; i++) {
+        if (sm.charCodeAt(i) > 1103 || sm.charCodeAt(i) < 1040 && sm.charCodeAt(i) != 32) continue
+        newText += sm.charAt(i)
+    }
+    return newText
+}
+
+console.log(fmtText(someText))
+</code>
+</div>
+<div class="task-box">
+        <p class="task-box__task"><strong>Задание: </strong> Есть два массива, в первом - имена, во втором - фамилии. Нужно создать массив, элементы которого будут содержать имя и фамилию одной строкой</p>
+<code>var names = ["Игорь","Федя","Вячеслав","Петр"]
+var lastNames = ["Втулев","Крамеров","Обжаркин","Рошенко"]
+
+var fullNames =[];
+
+if (names.length == lastNames.length) {
+    for (var i =0;i < names.length; i++) {
+        fullNames[i] = names[i] + " " + lastNames[i]
+        console.log(fullNames[i])
+    }
+}
+</code>
+</div>
+<div class="task-box">
+        <p class="task-box__task"><strong>Задание: </strong> Написать функцию сортировки массива. Не использовать метод sort (). Использовать оператор цикла while. Использовать методы работы с массивами и строками<p>
+<code>var someSortArr = [32, "HELLO","world", "good","$$",4574,"Настасья","молоко","aa"]
+
+function sortArray (arr) {
+    var b = false;
+    while (b == false) {
+        var count = 0;
+        for (var i = 0; i < arr.length - 1; i++) {
+            if (String(arr[i]) > String(arr[i+1] )) {
+                var replacement = String(arr.splice(i,1,String(arr[i+1])))
+                arr.splice(i+1,1,replacement)
+            }
+        }
+        for (var i = 0; i < arr.length - 1; i++) {
+            if (arr[i] < arr[i+1] ) {
+                count += 1
+            }
+        }
+        if (count == arr.length - 1 ) {
+            b =true
+        }
+    }
+    return arr
+}
+
+sortArray(someSortArr)
+</code>
+</div>
+<div class="task-box">
+        <p class="task-box__task"><strong>Задание: </strong> В панели навигации откройте файл js/index03.js. Обратите внимание на функцию валидации ввода пользователя ( testUserText ). В случае XSS атаки функция должна заменить текст, введенный пользователем, на сообщение: "XSS атака отражена" с указанием текущей даты и времени<p>
+<code>function testUserText ( userText ) {
+    if (userText.indexOf("<") != -1 || userText.indexOf(">") != -1) {
+        var dat = new Date;
+        dat = dat.getDate() + "/" + dat.getMonth() + "/" + dat.getFullYear() + " " + dat.getHours() + ":" + dat.getMinutes() + ":" + dat.getSeconds()
+        return "XSS атака отражена " + dat
+    } else {
+        return userText
+    }
+}
+</code>
+<img src="xss1.jpg">
+</div>
+<div class="task-box">
+        <p class="task-box__task"><strong>Задание: </strong> В панели навигации найдите файл index01.js ( в папке js/ ). Установите breakpoint на строке вызова функции insertUserText ( строка 10 ). Перезагрузите страницу. Теперь обратите внимание на функцию testUserText. Ваша задача: обезопасить свою страницу от внедрения вредоносного кода с помощью функции валидации testUserText функция должна вывести на страницу текст пользователя безопасным способом  ( т.е. текст должен быть выведен "as is" ( как есть ), но код не должен быть выполнен )<p>
+<code>function testUserText ( userText ) {
+      var txt = userText.replace("<","&lt;") // вместо угловой скобки экивалент & lt;
+      return txt
+}
+</code>
+<img src="xss2.jpg">
+</div>
+    </main>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var codeBlocks = document.getElementsByTagName("code");
+            for (var i =0; i < codeBlocks.length; i++) {
+                var oldCode = codeBlocks[i].innerHTML
+                var newCode = ""
+                for (var m = 0; m < oldCode.length; m++) {
+                    switch(oldCode.charCodeAt(m)) {
+                        case 32:
+                            newCode += "&nbsp;"
+                            break
+                        case 10:
+                            newCode += "<br>"
+                            break
+                        default:
+                            newCode += oldCode.charAt(m)
+                            break
+                    }
+                }
+                codeBlocks[i].innerHTML = newCode
+            }
+        })
+    </script>
+</body>
+</html>
